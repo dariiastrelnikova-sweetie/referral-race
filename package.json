@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node scripts/build-apps-script.mjs",
+    "build:static": "vite build",
     "preview": "vite preview",
     "deploy": "npm run build && node scripts/deploy.mjs"
   },
@@ -16,5 +17,8 @@
     "@google/clasp": "^3.4.1",
     "@vitejs/plugin-vue": "^5.2.1",
     "vite": "^6.0.7"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
