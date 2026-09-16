@@ -140,8 +140,8 @@ const checkpoints = [
   width: 52px;
   height: 52px;
   border-radius: 12px;
-  background: var(--green-dim);
-  color: var(--green-bright);
+  background: var(--accent-dim);
+  color: var(--accent);
   margin-bottom: 28px;
 }
 
@@ -156,7 +156,7 @@ const checkpoints = [
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--green-bright);
+  color: var(--accent);
   margin-bottom: 10px;
 }
 
@@ -178,7 +178,7 @@ h3 {
   font-weight: 800;
   font-size: 38px;
   line-height: 1;
-  color: var(--green-bright);
+  color: var(--accent);
 }
 
 .points small {

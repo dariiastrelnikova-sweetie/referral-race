@@ -5,7 +5,7 @@
  * body copy and data tables, Arial as the cross-platform fallback, and a strictly
  * monochrome palette (#000000, #FFFFFF and the grey scale).
  *
- * On top of that sits a thin F1 accent layer — red, podium metals, green flag.
+ * On top of that sits a thin accent layer — one green plus the podium metals.
  * These are campaign-only colours: keep them for buttons, checkpoint numerals and
  * podium positions. Everything else stays monochrome.
  */
@@ -23,10 +23,11 @@
   --grey-400: #666666;
   --grey-500: #333333;
 
-  /* surfaces (dark campaign theme, built from the brand's black scale) */
-  --surface: #000000;
-  --surface-raised: #111315;
-  --surface-sunken: #0a0b0c;
+  /* surfaces — near-black with a faint blue cast rather than pure #000, which
+     reads as a hole on an OLED screen and makes every panel above it float. */
+  --surface: #090a11;
+  --surface-raised: #12141e;
+  --surface-sunken: #06070d;
   --line: rgba(255, 255, 255, 0.12);
   --line-strong: rgba(255, 255, 255, 0.28);
 
@@ -35,17 +36,19 @@
   --text-secondary: #999999;
   --text-muted: #666666;
 
-  /* F1 accent layer */
-  --paint-red: #e10600;
-  --paint-red-dim: rgba(225, 6, 0, 0.14);
+  /* Accent layer — ONE colour, the house green. It replaced the F1 red and the
+     two different greens the page used to mix (#0f9d58 in the lights, #4ade80
+     in the scoring cards); everything that used to be red or green is this now,
+     including the starting lights. Don't reintroduce a second accent. */
+  --accent: #c1dc55;
+  --accent-dim: rgba(193, 220, 85, 0.14);
+  --accent-glow: rgba(193, 220, 85, 0.5);
+  /* Dark enough for text on top of --accent (buttons, tags). */
+  --on-accent: #090a11;
+
   --podium-gold: #ffb800;
   --podium-silver: #c7c9cc;
   --podium-bronze: #c97a4a;
-  --green-flag: #0f9d58;
-  /* Brighter green for text and icons — #0f9d58 is too dark to read on black.
-     Used by the scoring section, which is deliberately green rather than red. */
-  --green-bright: #4ade80;
-  --green-dim: rgba(74, 222, 128, 0.12);
 
   /* geometry */
   --radius: 2px;

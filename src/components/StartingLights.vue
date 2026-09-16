@@ -114,20 +114,28 @@ onBeforeUnmount(() => timeouts.forEach(clearTimeout))
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #1a0403;
-  border: 2px solid #2e100e;
+  background: var(--surface-sunken);
+  border: 2px solid var(--line);
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
-  transition: background 0.15s ease, box-shadow 0.15s ease;
+  transition: background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
+/*
+ * A real starting rig counts down in red and goes dark. With red out of the
+ * palette the countdown runs neutral grey and only "lights out" carries the
+ * accent — so the green still means go, and nothing else on the page competes
+ * with it.
+ */
 .light.on {
-  background: var(--paint-red);
-  box-shadow: 0 0 18px 4px rgba(225, 6, 0, 0.7), inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background: var(--grey-400);
+  border-color: var(--grey-500);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 .light.out {
-  background: var(--green-flag);
-  box-shadow: 0 0 20px 5px rgba(15, 157, 88, 0.55), inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px 5px var(--accent-glow), inset 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 760px) {

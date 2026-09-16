@@ -297,7 +297,7 @@ const rest = prizes.slice(1)
 }
 
 .items a:hover {
-  border-bottom-color: var(--paint-red);
+  border-bottom-color: var(--accent);
 }
 
 /* Single-item prizes: one link, so the whole card is the click target. The

@@ -6,7 +6,6 @@ import { scrollToId } from '../scroll.js'
 
 <template>
   <section id="top" class="hero">
-    <div class="track" aria-hidden="true"></div>
     <div class="wrap hero-inner">
       <StartingLights />
       <h1>
@@ -35,7 +34,6 @@ import { scrollToId } from '../scroll.js'
   position: relative;
   padding: 96px 0 84px;
   overflow: hidden;
-  border-bottom: 1px solid var(--line);
 }
 
 /* Matches the full-screen rhythm the other sections use on desktop. */
@@ -46,18 +44,6 @@ import { scrollToId } from '../scroll.js'
     flex-direction: column;
     justify-content: center;
   }
-}
-
-/* Faint track markings running behind the hero. */
-.track {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.035) 0 2px,
-    transparent 2px 64px
-  );
-  pointer-events: none;
 }
 
 .hero-inner {
@@ -75,7 +61,7 @@ h1 {
 }
 
 .accent {
-  color: var(--paint-red);
+  color: var(--accent);
 }
 
 .sub {

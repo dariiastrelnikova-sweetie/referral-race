@@ -122,7 +122,7 @@ function podiumClass(pos) {
         <thead>
           <tr>
             <th scope="col" class="col-pos">Pos</th>
-            <th scope="col">Referrer</th>
+            <th scope="col">Racer</th>
             <th scope="col" class="col-pts">Points</th>
           </tr>
         </thead>
@@ -285,7 +285,7 @@ tr.p3 .pos {
 
 /* first place also gets a thin red edge, the only outline on the board */
 tr.p1 td:first-child {
-  box-shadow: inset 2px 0 0 var(--paint-red);
+  box-shadow: inset 2px 0 0 var(--accent);
 }
 
 .empty {
@@ -312,8 +312,10 @@ tr.p1 td:first-child {
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  border: 1px solid var(--paint-red);
-  background: var(--paint-red-dim);
+  /* Neutral, not accent-coloured: the house green now means "go", and a green
+     failure card reads as success at a glance. */
+  border: 1px solid var(--line-strong);
+  background: var(--surface-raised);
   padding: 14px 20px;
   margin-bottom: 16px;
   font-size: 14px;

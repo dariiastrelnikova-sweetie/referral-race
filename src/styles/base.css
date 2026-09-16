@@ -45,7 +45,7 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--paint-red);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -78,7 +78,6 @@ a {
 
 .section {
   padding: 88px 0;
-  border-bottom: 1px solid var(--line);
 }
 
 /* On desktop every section fills at least the viewport and centres its content,
@@ -152,12 +151,14 @@ a {
 }
 
 .btn-primary {
-  background: var(--paint-red);
-  color: var(--paper);
+  background: var(--accent);
+  /* Dark text, not white: the accent is a light lime, so white on it is barely
+     legible. */
+  color: var(--on-accent);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 8px 24px -6px rgba(225, 6, 0, 0.6);
+  box-shadow: 0 8px 24px -6px var(--accent-glow);
 }
 
 .btn-ghost {
