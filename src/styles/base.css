@@ -1,0 +1,218 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* offset for the sticky header when jumping to an anchor */
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Brand book: all text is aligned to the left. */
+  text-align: left;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--paint-red);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- shared layout ---------- */
+
+.wrap {
+  /* width:100% is load-bearing, not redundant. Sections are flex columns on
+     desktop, and a flex item with `margin: 0 auto` on the cross axis opts out of
+     `align-items: stretch` — so .wrap shrank to its content width. That went
+     unnoticed in sections whose content is wide anyway, but collapsed the
+     leaderboard to the width of its table. */
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  padding: 88px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* On desktop every section fills at least the viewport and centres its content,
+   so the page reads as a sequence of full screens. dvh rather than vh because
+   the two differ on mobile browsers with retracting toolbars — this only applies
+   above 900px, but dvh is the correct unit either way.
+   min-height, not height: the expanded leaderboard runs far past one screen. */
+@media (min-width: 900px) {
+  .section {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* The content is centred in a full screen, so the generous block padding is
+       no longer doing the spacing work — and it was eating the height the
+       prizes grid needs to fit alongside its heading. */
+    padding: 56px 0;
+  }
+
+  .section-head {
+    margin-bottom: 36px;
+  }
+}
+
+.section-head {
+  margin-bottom: 48px;
+  max-width: 640px;
+}
+
+.section-head h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  margin: 10px 0 12px;
+}
+
+.section-head p {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+/* ---------- shared atoms ---------- */
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  padding: 14px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--paint-red);
+  color: var(--paper);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 24px -6px rgba(225, 6, 0, 0.6);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--line-strong);
+}
+
+.btn-ghost:hover {
+  border-color: var(--paper);
+}
+
+/* Tabular figures everywhere a number has to line up in a column. */
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Chequered strip — the one piece of pure race decoration. */
+.checker {
+  height: 10px;
+  background-color: var(--surface);
+  background-image: linear-gradient(
+      45deg,
+      var(--paper) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--paper) 75%
+    ),
+    linear-gradient(45deg, var(--paper) 25%, transparent 25%, transparent 75%, var(--paper) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  opacity: 0.85;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --gutter: 18px;
+  }
+  .section {
+    padding: 60px 0;
+  }
+  .section-head {
+    margin-bottom: 32px;
+  }
+}

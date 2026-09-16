@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "referral-race",
+      "runtimeExecutable": "/Users/dariia.strelnikova/.local/share/fnm/node-versions/v24.20.0/installation/bin/node",
+      "runtimeArgs": [
+        "/Users/dariia.strelnikova/code/referral-race/node_modules/vite/bin/vite.js",
+        "/Users/dariia.strelnikova/code/referral-race",
+        "--port",
+        "5173",
+        "--strictPort"
+      ],
+      "port": 5173
+    }
+  ]
+}
