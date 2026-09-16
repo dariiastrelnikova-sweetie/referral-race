@@ -6,7 +6,10 @@ import { CAMPAIGN_END, CAMPAIGN_START, CONTACT } from '../config.js'
   <footer>
     <div class="checker" aria-hidden="true"></div>
     <div class="wrap footer-inner">
-      <p>Referral campaign runs {{ CAMPAIGN_START }} – {{ CAMPAIGN_END }}.</p>
+      <!-- No end date set yet — say when it started rather than print a blank
+           or a placeholder where the range should be. -->
+      <p v-if="CAMPAIGN_END">Referral campaign runs {{ CAMPAIGN_START }} – {{ CAMPAIGN_END }}.</p>
+      <p v-else>Referral campaign started {{ CAMPAIGN_START }}.</p>
       <p>Questions → {{ CONTACT }}</p>
     </div>
   </footer>

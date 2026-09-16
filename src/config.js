@@ -11,9 +11,13 @@
 // only credits a referral when "Credited To" is set on the application.
 export const ASHBY_REFERRAL_URL = 'https://app.ashbyhq.com/'
 
-// TODO: campaign dates, shown in the footer.
-export const CAMPAIGN_START = '[start date]'
-export const CAMPAIGN_END = '[end date]'
+// Campaign dates, shown in the footer. CAMPAIGN_START matches
+// LB_CONFIG.START_DATE in apps-script/leaderboard_api.gs — the date the
+// leaderboard counts from. Keep the two in step.
+// Leave CAMPAIGN_END empty until it is decided; the footer drops the range
+// rather than printing a placeholder.
+export const CAMPAIGN_START = '1 September'
+export const CAMPAIGN_END = ''
 
 // Who people ask about the campaign.
 export const CONTACT = 'Dariia Strelnikova (Slack)'

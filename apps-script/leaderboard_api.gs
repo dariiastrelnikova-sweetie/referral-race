@@ -38,8 +38,13 @@ var LB_CONFIG = {
   POINTS_COL: 3, // C — коїни
 
   // Рахувати лише рядки з цієї дати включно. null = рахувати все.
-  // Формат 'YYYY-MM-DD', напр. '2026-09-05'.
-  START_DATE: null,
+  // Формат 'YYYY-MM-DD'.
+  //
+  // Це «обнулення» гонки: старі нарахування нікуди не діваються, вони просто
+  // не потрапляють у підсумок. Щоб повернути всю історію — постав null назад.
+  // Перед зміною запусти lbDateAudit(): він покаже, скільки рядків випаде і
+  // чи не випадуть разом з ними живі нарахування з кривою датою.
+  START_DATE: '2026-09-01',
 
   // Скільки секунд тримати відповідь у кеші (макс. 21600).
   CACHE_SECONDS: 60,
@@ -541,5 +546,75 @@ function lbTailReport() {
     Logger.log('УВАГА: у видимих колонках порожньо. Тоді хвіст тримає щось інше —');
     Logger.log('колонка D, колонка правіше за E, або форматування/валідація даних.');
     Logger.log('Видаляй рядки цілком (right-click -> Delete rows), а не Delete values.');
+  }
+}
+
+/**
+ * ТІЛЬКИ ЧИТАЄ. Аудит фільтра за датою перед тим, як його вмикати.
+ *
+ * Навіщо: LB_isOnOrAfter() повертає false для всього, що не розпізналось як
+ * дата. Тобто з увімкненим START_DATE зникають не лише старі рядки, а й будь-які
+ * рядки з порожньою або дивно записаною колонкою B — а це якраз ручні
+ * нарахування. Ця функція показує, скільки таких.
+ *
+ * Колонку D (імена кандидатів) не читає.
+ */
+function lbDateAudit() {
+  var sheet = LB_reportSheet();
+  var firstRow = LB_CONFIG.HEADER_ROWS + 1;
+  var lastRow = sheet.getLastRow();
+  if (lastRow < firstRow) {
+    Logger.log('Даних немає.');
+    return;
+  }
+
+  var values = sheet.getRange(firstRow, 1, lastRow - firstRow + 1, 3).getValues();
+  var startDate = LB_startDate();
+  if (!startDate) {
+    Logger.log('START_DATE не задано — фільтр вимкнено, нічого не відсікається.');
+    return;
+  }
+
+  var kept = 0, keptPoints = 0;
+  var tooOld = 0, tooOldPoints = 0;
+  var unreadable = 0, unreadablePoints = 0;
+  var samples = [];
+
+  for (var i = 0; i < values.length; i++) {
+    var name = LB_cleanName(values[i][LB_CONFIG.NAME_COL - 1]);
+    if (!name) continue;
+    var points = LB_toNumber(values[i][LB_CONFIG.POINTS_COL - 1]);
+    if (points === null) continue;
+
+    var raw = values[i][LB_CONFIG.DATE_COL - 1];
+    if (LB_isOnOrAfter(raw, startDate)) {
+      kept++; keptPoints += points;
+      continue;
+    }
+
+    // Різниця принципова: «стара» — це саме те, що ми хотіли відсікти,
+    // «нечитабельна» — це, найімовірніше, помилка, і бали зникнуть дарма.
+    var readable = Object.prototype.toString.call(raw) === '[object Date]' ||
+      (typeof raw === 'string' && /^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/.test(String(raw).trim()));
+
+    if (readable) {
+      tooOld++; tooOldPoints += points;
+    } else {
+      unreadable++; unreadablePoints += points;
+      if (samples.length < 10) {
+        samples.push('рядок ' + (firstRow + i) + ': B=' + JSON.stringify(raw) + ', коїнів ' + points);
+      }
+    }
+  }
+
+  Logger.log('START_DATE = ' + LB_CONFIG.START_DATE);
+  Logger.log('Зараховано:   ' + kept + ' рядків, ' + keptPoints + ' коїнів');
+  Logger.log('Відсічено як старі: ' + tooOld + ' рядків, ' + tooOldPoints + ' коїнів');
+  Logger.log('ВИПАЛИ ЧЕРЕЗ НЕЧИТАБЕЛЬНУ ДАТУ: ' + unreadable + ' рядків, ' +
+             unreadablePoints + ' коїнів');
+  if (unreadable) {
+    Logger.log('Це, найпевніше, ручні рядки. Виправ дату в колонці B — інакше ці ' +
+               'бали не потраплять у рейтинг:');
+    for (var j = 0; j < samples.length; j++) Logger.log('  ' + samples[j]);
   }
 }
