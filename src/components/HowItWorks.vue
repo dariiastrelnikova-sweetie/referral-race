@@ -13,7 +13,7 @@ const checkpoints = [
   {
     num: '01',
     title: 'Phone screen',
-    body: 'Your referral clears the first conversation with the team.',
+    body: 'Your referral clears the first conversation with the recruiter.',
     points: 20,
     icon: 'phone',
   },

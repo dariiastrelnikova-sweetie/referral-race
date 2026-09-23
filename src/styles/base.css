@@ -8,8 +8,8 @@
 
 html {
   scroll-behavior: smooth;
-  /* offset for the sticky header when jumping to an anchor */
-  scroll-padding-top: 88px;
+  /* offset for the sticky header, for anchor jumps and for scroll snapping */
+  scroll-padding-top: var(--header-h);
 }
 
 body {
@@ -86,8 +86,32 @@ a {
    above 900px, but dvh is the correct unit either way.
    min-height, not height: the expanded leaderboard runs far past one screen. */
 @media (min-width: 900px) {
+  /* Section-by-section scrolling. */
+  html {
+    scroll-snap-type: y mandatory;
+  }
+
+  .section,
+  .hero {
+    scroll-snap-align: start;
+  }
+
+  /*
+   * The footer needs a snap point of its own, or it is unreachable: the last
+   * one would be the closing section's top, and mandatory snapping refuses to
+   * settle past it — leaving the campaign dates and contact permanently below
+   * the fold. "end" rather than "start" because the footer is a 130px strip;
+   * aligning its bottom to the viewport bottom is the natural end-of-page
+   * position, and keeps the closing CTA on screen with it.
+   */
+  footer {
+    scroll-snap-align: end;
+  }
+
   .section {
-    min-height: 100dvh;
+    /* Minus the header: the sticky bar covers the top of the viewport, so a
+       full 100dvh section would always have that much pushed off the bottom. */
+    min-height: calc(100dvh - var(--header-h));
     display: flex;
     flex-direction: column;
     justify-content: center;

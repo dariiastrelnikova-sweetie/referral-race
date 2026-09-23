@@ -56,5 +56,8 @@
      stays the default for buttons, tables and product shots. */
   --radius-card: 14px;
   --wrap: 1280px;
+  /* Height of the sticky header. Drives scroll-padding for anchor jumps and
+     the full-screen section height, so they can't drift apart. */
+  --header-h: 89px;
   --gutter: 28px;
 }

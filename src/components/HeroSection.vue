@@ -39,7 +39,7 @@ import { scrollToId } from '../scroll.js'
 /* Matches the full-screen rhythm the other sections use on desktop. */
 @media (min-width: 900px) {
   .hero {
-    min-height: 100dvh;
+    min-height: calc(100dvh - var(--header-h));
     display: flex;
     flex-direction: column;
     justify-content: center;
